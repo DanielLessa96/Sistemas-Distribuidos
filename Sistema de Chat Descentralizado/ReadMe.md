@@ -1,52 +1,62 @@
-🚀 Sistema de Chat P2P Descentralizado com Eleição de Líder (Python)
-Implementação de um sistema de mensagens instantâneas (chat) P2P (peer-to-peer) totalmente descentralizado, desenvolvido em Python. O sistema é resiliente a falhas de nós e utiliza o Algoritmo do Bully para a eleição automática de um novo coordenador.
+💬 Sistema de Chat P2P Descentralizado com Eleição de Líder (Python)
 
-Este projeto foi desenvolvido como Trabalho Final para a disciplina de Sistemas Distribuídos.
+Este projeto implementa um sistema de mensagens instantâneas peer-to-peer (P2P) totalmente descentralizado, desenvolvido em Python.
+O sistema é tolerante a falhas, mantendo a comunicação ativa mesmo quando um dos nós deixa a rede. Para isso, utiliza o Algoritmo do Bully, responsável por eleger automaticamente um novo coordenador sempre que o líder atual se torna inacessível.
+
+Desenvolvido como Trabalho Final da disciplina de Sistemas Distribuídos, o sistema demonstra na prática conceitos fundamentais de coordenação distribuída, comunicação entre processos e resiliência de rede.
 
 ✨ Funcionalidades Principais
 
-Arquitetura 100% P2P: Sem necessidade de um servidor central; cada nó atua como cliente e servidor.
+Arquitetura totalmente descentralizada: cada nó atua simultaneamente como cliente e servidor, sem necessidade de um ponto central de controle.
 
+Descoberta automática de rede (Multicast UDP): novos nós localizam o coordenador ao escutar um endereço de multicast.
 
-Descoberta de Rede (Multicast): Novos nós entram na rede "sintonizando" um endereço de multicast (UDP) para encontrar o coordenador.
+Gerenciamento de nós: o coordenador atribui identificadores únicos e informa a todos sobre entradas e saídas na rede.
 
+Tolerância a falhas: o sistema detecta automaticamente a ausência do coordenador por meio de mensagens de heartbeat.
 
-Gerenciamento de Nós: Um nó é eleito como Coordenador para centralizar tarefas de gerenciamento, como atribuir IDs únicos e anunciar saídas.
+Eleição de líder (Algoritmo do Bully): ao identificar uma falha, os nós elegem o participante com o maior ID ativo como novo coordenador.
 
+Histórico consistente: quando um novo nó entra, ele recebe o histórico completo do chat, garantindo que todas as mensagens fiquem sincronizadas entre os participantes.
 
+Concorrência: a aplicação utiliza threads para executar múltiplas tarefas em paralelo, como escutar mensagens, processar comandos e verificar o estado dos peers.
 
-Tolerância a Falhas: O sistema detecta automaticamente a falha do nó coordenador através de um mecanismo de heartbeats.
+🔧 Arquitetura e Comunicação
 
+A comunicação entre os nós ocorre por meio de dois canais complementares:
 
+🛰️ Multicast (UDP)
 
-Eleição de Líder (Algoritmo do Bully): Quando o coordenador falha, os nós restantes iniciam uma eleição para escolher o nó ativo com o ID mais alto como o novo líder.
+Usado para comunicação um-para-todos, eficiente e leve:
 
+JOIN_REQUEST: enviado por novos nós para descobrir a rede, sendo respondido apenas pelo coordenador.
 
-Histórico Consistente: Novos nós recebem o histórico completo do chat ao entrar, e todas as mensagens são replicadas para todos os participantes.
+HEARTBEAT: mensagem periódica enviada pelo coordenador para indicar que está ativo.
 
-Concorrência: O sistema utiliza threading para lidar com múltiplas tarefas simultâneas (ouvir a rede, receber inputs do usuário, verificar heartbeats).
+🔗 Unicast (TCP)
 
-🔧 Como Funciona: Arquitetura
-O sistema utiliza dois canais de comunicação principais:
+Usado para comunicações ponto-a-ponto confiáveis:
 
-Multicast (UDP): Usado para comunicação "um-para-todos" de baixo custo.
+JOIN_RESPONSE: resposta direta do coordenador com o ID, lista de peers e histórico de mensagens.
 
-JOIN_REQUEST: Enviado por um novo nó para descobrir a rede. Apenas o coordenador responde.
+PEER_UPDATE: enviado a todos os nós quando há alterações na rede.
 
+CHAT_MESSAGE: mensagens trocadas entre os participantes.
 
-HEARTBEAT: Enviado periodicamente pelo coordenador para provar que está ativo.
+ELECTION, ELECTION_OK e COORDINATOR_ANNOUNCEMENT: mensagens usadas no processo de eleição do novo coordenador.
 
-Unicast (TCP): Usado para comunicação "ponto-a-ponto" confiável.
+Mesmo durante o processo de eleição, o chat permanece operacional, garantindo continuidade da comunicação entre os nós ativos.
 
-JOIN_RESPONSE: Resposta direta do coordenador para o novo nó (com ID, lista de peers, histórico).
+🧠 Conceitos Envolvidos
 
-PEER_UPDATE: Enviado pelo coordenador para todos os nós quando alguém entra ou sai.
+O sistema aplica e integra diversos princípios de Sistemas Distribuídos, incluindo:
 
-CHAT_MESSAGE: Mensagem de chat enviada de um nó para todos os outros peers.
+Comunicação entre processos com UDP e TCP
 
-ELECTION, ELECTION_OK, COORDINATOR_ANNOUNCEMENT: Mensagens usadas durante o processo de eleição do Algoritmo do Bully.
+Detecção de falhas e recuperação automática
 
+Coordenação distribuída sem servidor central
 
+Concorrência e sincronização entre threads
 
-
-O chat continuará funcionando normalmente sob a nova liderança.
+Implementação prática do Algoritmo do Bully
