@@ -1,11 +1,11 @@
-💬 Sistema de Chat P2P Descentralizado com Eleição de Líder (Python)
+# 💬 Sistema de Chat P2P Descentralizado com Eleição de Líder (Python)
 
 Este projeto implementa um sistema de mensagens instantâneas peer-to-peer (P2P) totalmente descentralizado, desenvolvido em Python.
 O sistema é tolerante a falhas, mantendo a comunicação ativa mesmo quando um dos nós deixa a rede. Para isso, utiliza o Algoritmo do Bully, responsável por eleger automaticamente um novo coordenador sempre que o líder atual se torna inacessível.
 
 Desenvolvido como Trabalho Final da disciplina de Sistemas Distribuídos, o sistema demonstra na prática conceitos fundamentais de coordenação distribuída, comunicação entre processos e resiliência de rede.
 
-✨ Funcionalidades Principais
+# ✨ Funcionalidades Principais
 
 Arquitetura totalmente descentralizada: cada nó atua simultaneamente como cliente e servidor, sem necessidade de um ponto central de controle.
 
@@ -21,11 +21,11 @@ Histórico consistente: quando um novo nó entra, ele recebe o histórico comple
 
 Concorrência: a aplicação utiliza threads para executar múltiplas tarefas em paralelo, como escutar mensagens, processar comandos e verificar o estado dos peers.
 
-🔧 Arquitetura e Comunicação
+# 🔧 Arquitetura e Comunicação
 
 A comunicação entre os nós ocorre por meio de dois canais complementares:
 
-🛰️ Multicast (UDP)
+# 🛰️ Multicast (UDP)
 
 Usado para comunicação um-para-todos, eficiente e leve:
 
@@ -33,7 +33,7 @@ JOIN_REQUEST: enviado por novos nós para descobrir a rede, sendo respondido ape
 
 HEARTBEAT: mensagem periódica enviada pelo coordenador para indicar que está ativo.
 
-🔗 Unicast (TCP)
+# 🔗 Unicast (TCP)
 
 Usado para comunicações ponto-a-ponto confiáveis:
 
@@ -47,7 +47,7 @@ ELECTION, ELECTION_OK e COORDINATOR_ANNOUNCEMENT: mensagens usadas no processo d
 
 Mesmo durante o processo de eleição, o chat permanece operacional, garantindo continuidade da comunicação entre os nós ativos.
 
-🧠 Conceitos Envolvidos
+# 🧠 Conceitos Envolvidos
 
 O sistema aplica e integra diversos princípios de Sistemas Distribuídos, incluindo:
 
@@ -60,3 +60,4 @@ Coordenação distribuída sem servidor central
 Concorrência e sincronização entre threads
 
 Implementação prática do Algoritmo do Bully
+
